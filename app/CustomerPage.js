@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import ProfileModal from "./ProfileModal";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 function CustomerPage() {
   const companies = {
@@ -116,6 +117,12 @@ function CustomerPage() {
           >
             Profile
           </button>
+        {Cookies.get("role")=="customer" &&  <button
+            className="profile-button"
+            onClick={() =>Cookies.remove("role")}
+          >
+            Logout
+          </button>}
         </nav>
       </header>
 
