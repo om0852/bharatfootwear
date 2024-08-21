@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProfileModal from "./ProfileModal";
+import axios from "axios";
 
 function CustomerPage() {
   const companies = {
@@ -17,128 +18,79 @@ function CustomerPage() {
         img: "https://via.placeholder.com/200?text=Sparx+Model+B",
       },
     ],
-    Adidas: [
-      {
-        name: "Adidas Model X",
-        price: 70,
-        img: "https://via.placeholder.com/200?text=Adidas+Model+X",
-      },
-      {
-        name: "Adidas Model Y",
-        price: 80,
-        img: "https://via.placeholder.com/200?text=Adidas+Model+Y",
-      },
-    ],
-    Nike: [
-      {
-        name: "Nike Air Max",
-        price: 90,
-        img: "https://via.placeholder.com/200?text=Nike+Air+Max",
-      },
-      {
-        name: "Nike Free Run",
-        price: 100,
-        img: "https://via.placeholder.com/200?text=Nike+Free+Run",
-      },
-    ],
-    Van: [
-      {
-        name: "Van Classic",
-        price: 45,
-        img: "https://via.placeholder.com/200?text=Van+Classic",
-      },
-      {
-        name: "Van Old Skool",
-        price: 55,
-        img: "https://via.placeholder.com/200?text=Van+Old+Skool",
-      },
-    ],
-    Bata: [
-      {
-        name: "Bata Trendy",
-        price: 40,
-        img: "https://via.placeholder.com/200?text=Bata+Trendy",
-      },
-      {
-        name: "Bata Comfort",
-        price: 50,
-        img: "https://via.placeholder.com/200?text=Bata+Comfort",
-      },
-    ],
-    Lancer: [
-      {
-        name: "Lancer Trendy",
-        price: 40,
-        img: "https://via.placeholder.com/200?text=Bata+Trendy",
-      },
-      {
-        name: "Lancer Comfort",
-        price: 50,
-        img: "https://via.placeholder.com/200?text=Bata+Comfort",
-      },
-    ],
-    Acolight: [
-      {
-        name: "Bata Trendy",
-        price: 40,
-        img: "https://via.placeholder.com/200?text=Bata+Trendy",
-      },
-      {
-        name: "Bata Comfort",
-        price: 50,
-        img: "https://via.placeholder.com/200?text=Bata+Comfort",
-      },
-    ],
-    Flite: [
-      {
-        name: "Bata Trendy",
-        price: 40,
-        img: "https://via.placeholder.com/200?text=Bata+Trendy",
-      },
-      {
-        name: "Bata Comfort",
-        price: 50,
-        img: "https://via.placeholder.com/200?text=Bata+Comfort",
-      },
-    ],
-    Campus: [
-      {
-        name: "Bata Trendy",
-        price: 40,
-        img: "https://via.placeholder.com/200?text=Bata+Trendy",
-      },
-      {
-        name: "Bata Comfort",
-        price: 50,
-        img: "https://via.placeholder.com/200?text=Bata+Comfort",
-      },
-    ],
-    Paragon: [
-      {
-        name: "Bata Trendy",
-        price: 40,
-        img: "https://via.placeholder.com/200?text=Bata+Trendy",
-      },
-      {
-        name: "Bata Comfort",
-        price: 50,
-        img: "https://via.placeholder.com/200?text=Bata+Comfort",
-      },
-    ],
+    // Other companies...
   };
+
   const [showProfile, setShowProfile] = useState(false);
   const [showData, setShowData] = useState(null);
+  const [cart, setCart] = useState([]);
+  const [placeOrder, setPlaceOrder] = useState([]);
+  const [select, setSelect] = useState(null);
+  // Form state
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [otp, setOtp] = useState("");
+  const [generatedOtp, setGeneratedOtp] = useState(null); // To store the generated OTP for verification
+
+  useEffect(() => {
+    const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
+    const storedOrder = JSON.parse(localStorage.getItem("order")) || [];
+    setCart(storedCart);
+    setPlaceOrder(storedOrder);
+  }, []);
+
   const openProfile = () => setShowProfile(true);
   const closeProfile = () => setShowProfile(false);
+
+  function addToCart(name, price) {
+    const newItem = { name, price };
+    const updatedCart = [...cart, newItem];
+    setCart(updatedCart);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+  }
+
+  // Function to handle OTP generation and sending
+  function handleOtp() {
+    axios.post("/api/sendotp", { email }).then((res) => {
+      setGeneratedOtp(res.data.otp);
+    });
+    alert(`OTP sent`);
+  }
+
+  // Function to handle placing the order
+  function handlePlaceOrder() {
+    if (otp === generatedOtp?.toString()) {
+      const orderDetails = {
+        name,
+        email,
+        address,
+        cart,
+      };
+      const updatedOrders = [...placeOrder, orderDetails];
+      setPlaceOrder(updatedOrders);
+      localStorage.setItem("order", JSON.stringify(updatedOrders));
+      alert("Order placed successfully!");
+      setCart([]);
+      setEmail("");
+      setName("");
+      setAddress("");
+      setOtp("");
+      setGeneratedOtp(null);
+      localStorage.removeItem("cart");
+    } else {
+      alert("Invalid OTP. Please try again.");
+    }
+  }
 
   return (
     <div>
       <header>
         <h1>New Bharat Footwear</h1>
         <nav>
-          <button>Cart</button>
-          <button>Placed Orders</button>
-          <button>Shipped Orders</button>
+          <button onClick={() => setSelect("cart")}>Cart</button>
+          <button onClick={() => setSelect("placed")}>Placed Orders</button>
+          <button onClick={() => setSelect("shipped")}>Shipped Orders</button>
           <button className="profile-button" onClick={openProfile}>
             Profile
           </button>
@@ -146,21 +98,21 @@ function CustomerPage() {
       </header>
 
       <main>
-        {/* Circles for companies */}
         <section>
-          {Object.entries(companies).map(([key, value]) => {
-            return (
-              <div
-                onClick={() => setShowData(value)}
-                className="company-circle"
-                data-company="Sparx"
-              >
-                {key}
-              </div>
-            );
-          })}
-          <section id="productDisplay">
-            {showData && showData.map((product) => (
+          {Object.entries(companies).map(([key, value]) => (
+            <div
+              key={key}
+              onClick={() => setShowData(value)}
+              className="company-circle"
+            >
+              {key}
+            </div>
+          ))}
+        </section>
+
+        <section id="productDisplay">
+          {showData &&
+            showData.map((product) => (
               <div className="product" key={product.name}>
                 <img src={product.img} alt={product.name} />
                 <h3>{product.name}</h3>
@@ -170,12 +122,85 @@ function CustomerPage() {
                 </button>
               </div>
             ))}
-          </section>
-          {/* Add other company circles */}
         </section>
 
-        {/* Sections for products, cart, orders, etc. */}
-        {/* Add corresponding state and logic for each section */}
+        {select == "cart" && (
+          <section id="cart">
+            <h1>Cart</h1>
+            {cart.map((data, index) => (
+              <p key={index}>
+                {data.name} - ₹{data.price}
+              </p>
+            ))}
+
+            <div className="login-container">
+              <h2>Place Order</h2>
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <input
+                type="text"
+                placeholder="Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+              <input
+                type="text"
+                placeholder="Address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                required
+              />
+              <input
+                type="text"
+                placeholder="OTP"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+                required
+              />
+              <button onClick={handleOtp}>Send OTP</button>
+              {generatedOtp && (
+                <button onClick={handlePlaceOrder}>Place Order</button>
+              )}{" "}
+            </div>
+          </section>
+        )}
+        {select === "placed" && (
+          <section id="placedOrders">
+            <h1>Placed Orders</h1>
+            {placeOrder.length > 0 ? (
+              placeOrder.map((order, index) => (
+                <div key={index} className="order-details">
+                  <h2>Order #{index + 1}</h2>
+                  <p>
+                    <strong>Name:</strong> {order.name}
+                  </p>
+                  <p>
+                    <strong>Email:</strong> {order.email}
+                  </p>
+                  <p>
+                    <strong>Address:</strong> {order.address}
+                  </p>
+                  <h3>Cart Items:</h3>
+                  <ul>
+                    {order.cart.map((item, itemIndex) => (
+                      <li key={itemIndex}>
+                        {item.name} - ₹{item.price}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))
+            ) : (
+              <p>No placed orders found.</p>
+            )}
+          </section>
+        )}
       </main>
 
       {showProfile && <ProfileModal onClose={closeProfile} />}
