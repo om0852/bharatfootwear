@@ -25,19 +25,22 @@ function CustomerPage() {
   const [showData, setShowData] = useState(null);
   const [cart, setCart] = useState([]);
   const [placeOrder, setPlaceOrder] = useState([]);
-  const [select, setSelect] = useState(null);
+  const [select, setSelect] = useState("ss");
   // Form state
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [otp, setOtp] = useState("");
   const [generatedOtp, setGeneratedOtp] = useState(null); // To store the generated OTP for verification
+  const [shippedOrders, setShippedOrders] = useState([]);
 
   useEffect(() => {
     const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
     const storedOrder = JSON.parse(localStorage.getItem("order")) || [];
     setCart(storedCart);
     setPlaceOrder(storedOrder);
+    let loadedShippedOrders = JSON.parse(localStorage.getItem("shipped")) || [];
+    setShippedOrders(loadedShippedOrders);
   }, []);
 
   const openProfile = () => setShowProfile(true);
@@ -201,7 +204,38 @@ function CustomerPage() {
             )}
           </section>
         )}
-      </main>
+      { select=="shipped" && <section>
+          <h2>Shipped Orders</h2>
+          <ul id="adminShippedOrderList">
+            {shippedOrders.length > 0 ? (
+              shippedOrders.map((order, index) => (
+                <div key={index} className="order-details">
+                  <h2>Shipped Order #{index + 1}</h2>
+                  <p>
+                    <strong>Name:</strong> {order.name}
+                  </p>
+                  <p>
+                    <strong>Email:</strong> {order.email}
+                  </p>
+                  <p>
+                    <strong>Address:</strong> {order.address}
+                  </p>
+                  <h3>Cart Items:</h3>
+                  <ul>
+                    {order.cart.map((item, itemIndex) => (
+                      <li key={itemIndex}>
+                        {item.name} - ₹{item.price}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))
+            ) : (
+              <p>No shipped orders found.</p>
+            )}
+          </ul>
+        </section>
+      }</main>
 
       {showProfile && <ProfileModal onClose={closeProfile} />}
     </div>
