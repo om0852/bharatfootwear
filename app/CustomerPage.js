@@ -41,11 +41,27 @@ function CustomerPage() {
     setPlaceOrder(storedOrder);
     let loadedShippedOrders = JSON.parse(localStorage.getItem("shipped")) || [];
     setShippedOrders(loadedShippedOrders);
+
+    const storedProfile = JSON.parse(localStorage.getItem("profile")) || {};
+    setEmail(storedProfile.email || "");
+    setName(storedProfile.name || "");
+    setAddress(storedProfile.address || "");
   }, []);
 
   const openProfile = () => setShowProfile(true);
   const closeProfile = () => setShowProfile(false);
 
+  const handleCancel = () => {
+    setShowProfile(false);
+  };
+  const saveData = () => {
+    const profileData = {
+      email,
+      name,
+      address,
+    };
+    localStorage.setItem("profile", JSON.stringify(profileData));
+  };
   function addToCart(name, price) {
     const newItem = { name, price };
     const updatedCart = [...cart, newItem];
@@ -94,13 +110,49 @@ function CustomerPage() {
           <button onClick={() => setSelect("cart")}>Cart</button>
           <button onClick={() => setSelect("placed")}>Placed Orders</button>
           <button onClick={() => setSelect("shipped")}>Shipped Orders</button>
-          <button className="profile-button" onClick={openProfile}>
+          <button
+            className="profile-button"
+            onClick={() => setShowProfile(true)}
+          >
             Profile
           </button>
         </nav>
       </header>
 
       <main>
+      <section style={{ display: showProfile == true ? "block" : "none" }}>
+        <div className="mt-6 login-container">
+          <h2>Edit Profile</h2>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            type="text"
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+          <input
+            type="text"
+            placeholder="Address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            required
+          />
+          <button className="my-2" onClick={saveData}>
+            Save
+          </button>
+          <br />
+          {/* Adding onClick event handler to close the modal */}
+          <button onClick={handleCancel}>Cancel</button>
+        </div>
+      </section>
+
         <section>
           {Object.entries(companies).map(([key, value]) => (
             <div
@@ -204,40 +256,40 @@ function CustomerPage() {
             )}
           </section>
         )}
-      { select=="shipped" && <section>
-          <h2>Shipped Orders</h2>
-          <ul id="adminShippedOrderList">
-            {shippedOrders.length > 0 ? (
-              shippedOrders.map((order, index) => (
-                <div key={index} className="order-details">
-                  <h2>Shipped Order #{index + 1}</h2>
-                  <p>
-                    <strong>Name:</strong> {order.name}
-                  </p>
-                  <p>
-                    <strong>Email:</strong> {order.email}
-                  </p>
-                  <p>
-                    <strong>Address:</strong> {order.address}
-                  </p>
-                  <h3>Cart Items:</h3>
-                  <ul>
-                    {order.cart.map((item, itemIndex) => (
-                      <li key={itemIndex}>
-                        {item.name} - ₹{item.price}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))
-            ) : (
-              <p>No shipped orders found.</p>
-            )}
-          </ul>
-        </section>
-      }</main>
-
-      {showProfile && <ProfileModal onClose={closeProfile} />}
+        {select == "shipped" && (
+          <section>
+            <h2>Shipped Orders</h2>
+            <ul id="adminShippedOrderList">
+              {shippedOrders.length > 0 ? (
+                shippedOrders.map((order, index) => (
+                  <div key={index} className="order-details">
+                    <h2>Shipped Order #{index + 1}</h2>
+                    <p>
+                      <strong>Name:</strong> {order.name}
+                    </p>
+                    <p>
+                      <strong>Email:</strong> {order.email}
+                    </p>
+                    <p>
+                      <strong>Address:</strong> {order.address}
+                    </p>
+                    <h3>Cart Items:</h3>
+                    <ul>
+                      {order.cart.map((item, itemIndex) => (
+                        <li key={itemIndex}>
+                          {item.name} - ₹{item.price}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))
+              ) : (
+                <p>No shipped orders found.</p>
+              )}
+            </ul>
+          </section>
+        )}
+      </main>
     </div>
   );
 }
