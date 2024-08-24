@@ -117,48 +117,51 @@ function CustomerPage() {
           >
             Profile
           </button>
-        {Cookies.get("role")=="customer" &&  <button
-            className="profile-button"
-            onClick={() =>Cookies.remove("role")}
-          >
-            Logout
-          </button>}
+          {Cookies.get("role") == "customer" && (
+            <button
+              className="profile-button"
+              onClick={() => Cookies.remove("role")}
+            >
+              Logout
+            </button>
+          )}
         </nav>
+        Address:-Infront of bus stand shrirampur, Tal-shrirampur Dist-Nagar
       </header>
 
       <main>
-      <section style={{ display: showProfile == true ? "block" : "none" }}>
-        <div className="mt-6 login-container">
-          <h2>Edit Profile</h2>
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            required
-          />
-          <button className="my-2" onClick={saveData}>
-            Save
-          </button>
-          <br />
-          {/* Adding onClick event handler to close the modal */}
-          <button onClick={handleCancel}>Cancel</button>
-        </div>
-      </section>
+        <section style={{ display: showProfile == true ? "block" : "none" }}>
+          <div className="mt-6 login-container">
+            <h2>Edit Profile</h2>
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <input
+              type="text"
+              placeholder="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+            <input
+              type="text"
+              placeholder="Address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              required
+            />
+            <button className="my-2" onClick={saveData}>
+              Save
+            </button>
+            <br />
+            {/* Adding onClick event handler to close the modal */}
+            <button onClick={handleCancel}>Cancel</button>
+          </div>
+        </section>
 
         <section>
           {Object.entries(companies).map(([key, value]) => (
