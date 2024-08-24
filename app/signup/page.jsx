@@ -61,7 +61,7 @@ function Page() {
         />
       )}
       {gotp != Infinity && <button onClick={handleSubmit}>Create</button>}{" "}
-      {gotp == Infinity && <button onClick={handleOtp}>Send Otp</button>}{" "}
+      {gotp == Infinity && <button onClick={handleOtp}>Send Otp</button>}{" "}<br/>
       <Link href={"/login"}>Have a account?</Link>
     </div>
   );

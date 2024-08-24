@@ -64,7 +64,14 @@ nav button:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background: #5B99C2;
 }
-
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 2em;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 .login-container h2 {
   font-family: 'Comic Sans MS', bold;
   margin-bottom: 20px;

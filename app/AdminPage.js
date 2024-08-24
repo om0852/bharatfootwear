@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 
 function AdminPage() {
-  const [orders, setOrders] = useState([]);
+  const [history, setHistory] = useState([]);
   const [shippedOrders, setShippedOrders] = useState([]);
   const [placeOrder, setPlaceOrder] = useState([]);
 
@@ -11,16 +11,20 @@ function AdminPage() {
     setPlaceOrder(storedOrder);
     let loadedShippedOrders = JSON.parse(localStorage.getItem("shipped")) || [];
     setShippedOrders(loadedShippedOrders);
+    let hi = JSON.parse(localStorage.getItem("history")) || [];
+    setHistory(hi);
   }, []);
 
   const clearOrders = () => {
-    setOrders([]);
-    localStorage.removeItem("adminOrders");
+    const data = [...shippedOrders, ...placeOrder];
+    setPlaceOrder([]);
+    setShippedOrders(data);
   };
 
   const clearShippedOrders = () => {
     setShippedOrders([]);
-    localStorage.removeItem("adminShippedOrders");
+    const datat = [...shippedOrders, ...history];
+    localStorage.setItem("history", JSON.stringify(datat));
   };
 
   function handleShipped(index) {

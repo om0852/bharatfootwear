@@ -12,7 +12,7 @@ function Page({ onLogin }) {
   const [role, setRole] = useState("customer");
   const handleSubmit = () => {
     axios
-      .post("/api/login", { email, password,role })
+      .post("/api/login", { email, password, role })
       .then((res) => {
         alert(res.data.message);
         Cookie.set("role", res.data.role);
@@ -43,6 +43,7 @@ function Page({ onLogin }) {
         <option value={"admin"}>admin</option>
       </select>
       <button onClick={handleSubmit}>Login</button>
+      <br />
       <Link href={"/signup"}>Create a new account?</Link>
     </div>
   );
