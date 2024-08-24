@@ -19,7 +19,114 @@ function CustomerPage() {
         img: "https://via.placeholder.com/200?text=Sparx+Model+B",
       },
     ],
-    // Other companies...
+    Adidas: [
+      {
+        name: "Adidas Model X",
+        price: 70,
+        img: "https://via.placeholder.com/200?text=Adidas+Model+X",
+      },
+      {
+        name: "Adidas Model Y",
+        price: 80,
+        img: "https://via.placeholder.com/200?text=Adidas+Model+Y",
+      },
+    ],
+    Nike: [
+      {
+        name: "Nike Air Max",
+        price: 90,
+        img: "https://via.placeholder.com/200?text=Nike+Air+Max",
+      },
+      {
+        name: "Nike Free Run",
+        price: 100,
+        img: "https://via.placeholder.com/200?text=Nike+Free+Run",
+      },
+    ],
+    Van: [
+      {
+        name: "Van Classic",
+        price: 45,
+        img: "https://via.placeholder.com/200?text=Van+Classic",
+      },
+      {
+        name: "Van Old Skool",
+        price: 55,
+        img: "https://via.placeholder.com/200?text=Van+Old+Skool",
+      },
+    ],
+    Bata: [
+      {
+        name: "Bata Trendy",
+        price: 40,
+        img: "https://via.placeholder.com/200?text=Bata+Trendy",
+      },
+      {
+        name: "Bata Comfort",
+        price: 50,
+        img: "https://via.placeholder.com/200?text=Bata+Comfort",
+      },
+    ],
+    Lancer: [
+      {
+        name: "Lancer Trendy",
+        price: 40,
+        img: "https://via.placeholder.com/200?text=Bata+Trendy",
+      },
+      {
+        name: "Lancer Comfort",
+        price: 50,
+        img: "https://via.placeholder.com/200?text=Bata+Comfort",
+      },
+    ],
+    Acolight: [
+      {
+        name: "Bata Trendy",
+        price: 40,
+        img: "https://via.placeholder.com/200?text=Bata+Trendy",
+      },
+      {
+        name: "Bata Comfort",
+        price: 50,
+        img: "https://via.placeholder.com/200?text=Bata+Comfort",
+      },
+    ],
+    Flite: [
+      {
+        name: "Bata Trendy",
+        price: 40,
+        img: "https://via.placeholder.com/200?text=Bata+Trendy",
+      },
+      {
+        name: "Bata Comfort",
+        price: 50,
+        img: "https://via.placeholder.com/200?text=Bata+Comfort",
+      },
+    ],
+    Campus: [
+      {
+        name: "Bata Trendy",
+        price: 40,
+        img: "https://via.placeholder.com/200?text=Bata+Trendy",
+      },
+      {
+        name: "Bata Comfort",
+        price: 50,
+        img: "https://via.placeholder.com/200?text=Bata+Comfort",
+      },
+    ],
+    Paragon: [
+      {
+        name: "Bata Trendy",
+        price: 40,
+        img: "https://via.placeholder.com/200?text=Bata+Trendy",
+      },
+      {
+        name: "Bata Comfort",
+        price: 50,
+        img: "https://via.placeholder.com/200?text=Bata+Comfort",
+      },
+    ],
   };
 
   const [showProfile, setShowProfile] = useState(false);
