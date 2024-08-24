@@ -6,7 +6,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 function CustomerPage() {
-  const companies = {
+  const [inp, setInp] = useState("");
+  const companiesList = {
     Sparx: [
       {
         name: "Sparx Model A",
@@ -128,6 +129,16 @@ function CustomerPage() {
       },
     ],
   };
+const [companies,setCompaines]=useState(companiesList)
+  useEffect(() => {
+     const companiesList1 = Object.entries(companiesList)
+      .filter(([key]) => key.toLowerCase().startsWith(inp.toLowerCase()))
+      .reduce((acc, [key, value]) => {
+        acc[key] = value;
+        return acc;
+      }, {});
+      setCompaines(companiesList1)
+  }, [inp]);
 
   const [showProfile, setShowProfile] = useState(false);
   const [showData, setShowData] = useState(null);
@@ -212,7 +223,7 @@ function CustomerPage() {
 
   return (
     <div>
-      <header>
+      <header className="mb-[20vh]">
         <h1>New Bharat Footwear</h1>
         <nav>
           <button onClick={() => setSelect("cart")}>Cart</button>
@@ -234,11 +245,19 @@ function CustomerPage() {
           )}
         </nav>
         Address:-Infront of bus stand shrirampur, Tal-shrirampur Dist-Nagar
+        <div className=" ">
+          <input
+            onChange={(e) => setInp(e.target.value)}
+            type="text"
+            className="w-[40vh] h-10 bg-black"
+            placeholder="serach company"
+          />
+        </div>
       </header>
 
       <main>
         <section style={{ display: showProfile == true ? "block" : "none" }}>
-          <div className="mt-6 login-container">
+          <div className="mt-[30vh] login-container">
             <h2>Edit Profile</h2>
             <input
               type="email"
@@ -270,7 +289,7 @@ function CustomerPage() {
           </div>
         </section>
 
-        <section>
+        <section className="mt-[30vh]">
           {Object.entries(companies).map(([key, value]) => (
             <div
               key={key}

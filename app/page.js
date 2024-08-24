@@ -20,7 +20,7 @@ function Home() {
   return (
     <div>
       {user?.role === "customer" && <CustomerPage  />}
-      {user?.role === "admin" && <AdminPage />}
+      {user?.role === "admin" && <AdminPage setUser={setUser} />}
     </div>
   );
 }

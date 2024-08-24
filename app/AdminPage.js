@@ -1,7 +1,9 @@
 "use client";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 
-function AdminPage() {
+function AdminPage({ setUser }) {
   const [history, setHistory] = useState([]);
   const [shippedOrders, setShippedOrders] = useState([]);
   const [placeOrder, setPlaceOrder] = useState([]);
@@ -18,12 +20,14 @@ function AdminPage() {
   const clearOrders = () => {
     const data = [...shippedOrders, ...placeOrder];
     setPlaceOrder([]);
+    localStorage.removeItem("order");
     setShippedOrders(data);
   };
 
   const clearShippedOrders = () => {
     setShippedOrders([]);
     const datat = [...shippedOrders, ...history];
+    localStorage.removeItem("shipped");
     localStorage.setItem("history", JSON.stringify(datat));
   };
 
@@ -42,8 +46,17 @@ function AdminPage() {
     <div>
       <header>
         <h1>Admin Panel</h1>
+        <button
+          id="adminClearOrdersBtn"
+          onClick={() => {
+            setUser(null);
+            Cookies.remove("role");
+          }}
+        >
+          Logout
+        </button>
       </header>
-      <main id="adminContent">
+      <main id="adminContent" className="mt-14">
         <h2>Orders</h2>
         <ul id="adminOrderList">
           <section id="placedOrders">
@@ -112,8 +125,12 @@ function AdminPage() {
             <p>No shipped orders found.</p>
           )}
         </ul>
-        <button id="adminClearShippedOrdersBtn" onClick={clearShippedOrders}>
+        <button id="adminClearOrdersBtn" onClick={clearShippedOrders}>
           Clear All Shipped Orders
+        </button>
+        <br />
+        <button id="adminClearOrdersBtn" className="my-4">
+          <Link href={"/history"}>History</Link>
         </button>
       </main>
     </div>
