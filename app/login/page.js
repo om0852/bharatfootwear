@@ -4,6 +4,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import Cookie from "js-cookie";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 function Page({ onLogin }) {
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -42,6 +43,7 @@ function Page({ onLogin }) {
         <option value={"admin"}>admin</option>
       </select>
       <button onClick={handleSubmit}>Login</button>
+      <Link href={"/signup"}>Create a new account?</Link>
     </div>
   );
 }

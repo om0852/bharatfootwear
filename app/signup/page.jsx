@@ -4,6 +4,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import Cookie from "cookies";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 function Page() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -61,6 +62,7 @@ function Page() {
       )}
       {gotp != Infinity && <button onClick={handleSubmit}>Create</button>}{" "}
       {gotp == Infinity && <button onClick={handleOtp}>Send Otp</button>}{" "}
+      <Link href={"/login"}>Have a account?</Link>
     </div>
   );
 }
