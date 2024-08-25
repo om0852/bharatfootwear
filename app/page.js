@@ -10,13 +10,10 @@ function Home() {
   const [user, setUser] = useState(null);
   const router = useRouter();
   useEffect(() => {
-    axios
-      .post("/api/loginchecker", { email: Cookies.get("email") })
-      .then((res) => {
-        if (!res.data.data) {
-          router.push("/login");
-        }
-      });
+    const email = Cookies.get("email");
+    if(!email){
+router.push("/login")
+    }
     const role = Cookies.get("role");
     if (role) {
       setUser({ role });
