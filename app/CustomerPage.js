@@ -394,6 +394,7 @@ function CustomerPage() {
   const [otp, setOtp] = useState("");
   const [generatedOtp, setGeneratedOtp] = useState(null); // To store the generated OTP for verification
   const [shippedOrders, setShippedOrders] = useState([]);
+  let carttotal=0
 
   useEffect(() => {
     const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -446,6 +447,7 @@ function CustomerPage() {
         email,
         address,
         cart,
+        total:carttotal
       };
       const updatedOrders = [...placeOrder, orderDetails];
       setPlaceOrder(updatedOrders);
@@ -571,11 +573,14 @@ function CustomerPage() {
         {select == "cart" && (
           <section id="cart">
             <h1>Cart</h1>
-            {cart.map((data, index) => (
+            {cart.map((data, index) =>{ 
+              carttotal+=data.price
+              return(
               <p key={index}>
                 {data.name} - ₹{data.price}
               </p>
-            ))}
+            )})}
+            <p>Total:-{carttotal}</p>
 
             <div className="login-container">
               <h2>Place Order</h2>
@@ -634,10 +639,12 @@ function CustomerPage() {
                   <ul>
                     {order.cart.map((item, itemIndex) => (
                       <li key={itemIndex}>
-                        {item.name} - ₹{item.price}
+                        {item.name} - ₹{item.price}<br/>
+                       Size: {item.size}
                       </li>
                     ))}
                   </ul>
+                  Total:-₹{order.total}
                 </div>
               ))
             ) : (
@@ -664,12 +671,16 @@ function CustomerPage() {
                     </p>
                     <h3>Cart Items:</h3>
                     <ul>
-                      {order.cart.map((item, itemIndex) => (
+                      {order.cart.map((item, itemIndex) =>{ 
+                        
+                        return(
                         <li key={itemIndex}>
-                          {item.name} - ₹{item.price}
+                            {item.name} - ₹{item.price}<br/>
+                            Size: {item.size}
                         </li>
-                      ))}
+                      )})}
                     </ul>
+                    Total:₹{order.total}
                   </div>
                 ))
               ) : (

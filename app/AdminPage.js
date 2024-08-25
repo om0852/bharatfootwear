@@ -23,7 +23,6 @@ function AdminPage({ setUser }) {
     localStorage.removeItem("order");
     setShippedOrders(data);
     localStorage.setItem("shipped", JSON.stringify(data));
-
   };
 
   const clearShippedOrders = () => {
@@ -81,10 +80,13 @@ function AdminPage({ setUser }) {
                     {order.cart.map((item, itemIndex) => (
                       <li key={itemIndex}>
                         {item.name} - ₹{item.price}
+                        <br />
+                        Size: {item.size}{" "}
                       </li>
                     ))}
                   </ul>
-                  <button onClick={() => handleShipped(index)}>
+                  Total:-₹{order.total}<br/>
+                  <button id="adminClearOrdersBtn" onClick={() => handleShipped(index)}>
                     Shipped Order
                   </button>
                 </div>
@@ -118,9 +120,12 @@ function AdminPage({ setUser }) {
                   {order.cart.map((item, itemIndex) => (
                     <li key={itemIndex}>
                       {item.name} - ₹{item.price}
+                      <br />
+                      Size: {item.size}{" "}
                     </li>
                   ))}
                 </ul>
+                total:-₹{order.total}
               </div>
             ))
           ) : (
