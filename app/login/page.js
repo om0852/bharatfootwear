@@ -17,6 +17,7 @@ function Page({ onLogin }) {
         alert(res.data.message);
         if (res.data.message != "Login Failed") {
           Cookie.set("role", res.data.role);
+          Cookie.set("email", email);
           router.push("/");
         }
       })
