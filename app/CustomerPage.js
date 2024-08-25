@@ -384,6 +384,7 @@ function CustomerPage() {
   const [showProfile, setShowProfile] = useState(false);
   const [showData, setShowData] = useState(null);
   const [cart, setCart] = useState([]);
+  const [size,setSize]=useState(1)
   const [placeOrder, setPlaceOrder] = useState([]);
   const [select, setSelect] = useState("ss");
   // Form state
@@ -422,8 +423,8 @@ function CustomerPage() {
     };
     localStorage.setItem("profile", JSON.stringify(profileData));
   };
-  function addToCart(name, price) {
-    const newItem = { name, price };
+  function addToCart(name, price, size) {
+    const newItem = { name, price, size };
     const updatedCart = [...cart, newItem];
     setCart(updatedCart);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
@@ -548,8 +549,19 @@ function CustomerPage() {
               <div className="product" key={product.name}>
                 <img src={product.img} alt={product.name} />
                 <h3>{product.name}</h3>
-                <p>${product.price}</p>
-                <button onClick={() => addToCart(product.name, product.price)}>
+                <p>₹{product.price}</p>
+                <select value={size} onChange={(e) => setSize(e.target.value)}>
+                  <option value={1}>1</option>
+                  <option value={2}>2</option>
+                  <option value={3}>3</option>
+                  <option value={4}>4</option>
+                  <option value={5}>5</option>
+                  <option value={6}>6</option>
+                  <option value={7}>7</option>
+                  <option value={8}>8</option>
+                  <option value={9}>9</option>
+                </select>
+                <button onClick={() => addToCart(product.name, product.price,size)}>
                   Add to Cart
                 </button>
               </div>
@@ -607,7 +619,7 @@ function CustomerPage() {
             <h1>Placed Orders</h1>
             {placeOrder.length > 0 ? (
               placeOrder.map((order, index) => (
-                <div key={index} className="order-details">
+                <div key={index} className="order-details container">
                   <h2>Order #{index + 1}</h2>
                   <p>
                     <strong>Name:</strong> {order.name}
@@ -639,7 +651,7 @@ function CustomerPage() {
             <ul id="adminShippedOrderList">
               {shippedOrders.length > 0 ? (
                 shippedOrders.map((order, index) => (
-                  <div key={index} className="order-details">
+                  <div key={index} className="order-details container">
                     <h2>Shipped Order #{index + 1}</h2>
                     <p>
                       <strong>Name:</strong> {order.name}

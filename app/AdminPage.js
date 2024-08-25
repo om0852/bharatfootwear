@@ -22,6 +22,8 @@ function AdminPage({ setUser }) {
     setPlaceOrder([]);
     localStorage.removeItem("order");
     setShippedOrders(data);
+    localStorage.setItem("shipped", JSON.stringify(data));
+
   };
 
   const clearShippedOrders = () => {
@@ -63,7 +65,7 @@ function AdminPage({ setUser }) {
             <h1>Placed Orders</h1>
             {placeOrder.length > 0 ? (
               placeOrder.map((order, index) => (
-                <div key={index} className="order-details">
+                <div key={index} className="order-details container">
                   <h2>Order #{index + 1}</h2>
                   <p>
                     <strong>Name:</strong> {order.name}
@@ -100,7 +102,7 @@ function AdminPage({ setUser }) {
         <ul id="adminShippedOrderList">
           {shippedOrders.length > 0 ? (
             shippedOrders.map((order, index) => (
-              <div key={index} className="order-details">
+              <div key={index} className="order-details container">
                 <h2>Shipped Order #{index + 1}</h2>
                 <p>
                   <strong>Name:</strong> {order.name}
@@ -125,13 +127,13 @@ function AdminPage({ setUser }) {
             <p>No shipped orders found.</p>
           )}
         </ul>
-        <button id="adminClearOrdersBtn" onClick={clearShippedOrders}>
+        {/* <button id="adminClearOrdersBtn" onClick={clearShippedOrders}>
           Clear All Shipped Orders
         </button>
         <br />
         <button id="adminClearOrdersBtn" className="my-4">
           <Link href={"/history"}>History</Link>
-        </button>
+        </button> */}
       </main>
     </div>
   );
