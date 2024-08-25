@@ -11,8 +11,8 @@ function Home() {
   const router = useRouter();
   useEffect(() => {
     const email = Cookies.get("email");
-    if(!email){
-router.push("/login")
+    if (!email) {
+      router.push("/login");
     }
     const role = Cookies.get("role");
     if (role) {

@@ -464,6 +464,10 @@ function CustomerPage() {
       alert("Invalid OTP. Please try again.");
     }
   }
+  const handleRemove = (index) => {
+    const data = cart.filter((item, ind) => ind !== index);
+    setCart(data)
+  };
 
   return (
     <div>
@@ -502,7 +506,7 @@ function CustomerPage() {
             onChange={(e) => setInp(e.target.value)}
             type="text"
             className="w-[40vh] h-10 bg-black"
-            placeholder="serach company"
+            placeholder="Search company"
           />
         </div>
       </header>
@@ -588,6 +592,14 @@ function CustomerPage() {
               return (
                 <p key={index}>
                   {data.name} - ₹{data.price}
+                  <br />
+                  <button
+                    onClick={() => {
+                      handleRemove(index);
+                    }}
+                  >
+                    Remove
+                  </button>
                 </p>
               );
             })}
