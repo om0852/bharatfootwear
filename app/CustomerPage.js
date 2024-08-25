@@ -509,7 +509,7 @@ function CustomerPage() {
 
       <main>
         <section style={{ display: showProfile == true ? "block" : "none" }}>
-          <div className="mt-[30vh] login-container">
+          <div className="mt-[100vh] relative top-[40vh] login-container">
             <h2>Edit Profile</h2>
             <input
               type="email"
