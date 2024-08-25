@@ -384,7 +384,7 @@ function CustomerPage() {
   const [showProfile, setShowProfile] = useState(false);
   const [showData, setShowData] = useState(null);
   const [cart, setCart] = useState([]);
-  const [size,setSize]=useState(1)
+  const [size, setSize] = useState(1);
   const [placeOrder, setPlaceOrder] = useState([]);
   const [select, setSelect] = useState("ss");
   // Form state
@@ -394,7 +394,7 @@ function CustomerPage() {
   const [otp, setOtp] = useState("");
   const [generatedOtp, setGeneratedOtp] = useState(null); // To store the generated OTP for verification
   const [shippedOrders, setShippedOrders] = useState([]);
-  let carttotal=0
+  let carttotal = 0;
 
   useEffect(() => {
     const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -447,7 +447,7 @@ function CustomerPage() {
         email,
         address,
         cart,
-        total:carttotal
+        total: carttotal,
       };
       const updatedOrders = [...placeOrder, orderDetails];
       setPlaceOrder(updatedOrders);
@@ -468,7 +468,15 @@ function CustomerPage() {
   return (
     <div>
       <header className="mb-[20vh]">
-        <h1>New Bharat Footwear</h1>
+        <h1>
+          {" "}
+          <img
+            className="mx-auto"
+            width={50}
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZP-fS3vscpaIWZYdvmnNpf3iHfEJpoU3K7IdwQJVM1zrzv-OYXWV0wxNwmiK0MXH3oig&usqp=CAU"
+          />
+          New Bharat Footwear
+        </h1>
         <nav>
           <button onClick={() => setSelect("cart")}>Cart</button>
           <button onClick={() => setSelect("placed")}>Placed Orders</button>
@@ -563,7 +571,9 @@ function CustomerPage() {
                   <option value={8}>8</option>
                   <option value={9}>9</option>
                 </select>
-                <button onClick={() => addToCart(product.name, product.price,size)}>
+                <button
+                  onClick={() => addToCart(product.name, product.price, size)}
+                >
                   Add to Cart
                 </button>
               </div>
@@ -573,13 +583,14 @@ function CustomerPage() {
         {select == "cart" && (
           <section id="cart">
             <h1>Cart</h1>
-            {cart.map((data, index) =>{ 
-              carttotal+=data.price
-              return(
-              <p key={index}>
-                {data.name} - ₹{data.price}
-              </p>
-            )})}
+            {cart.map((data, index) => {
+              carttotal += data.price;
+              return (
+                <p key={index}>
+                  {data.name} - ₹{data.price}
+                </p>
+              );
+            })}
             <p>Total:-{carttotal}</p>
 
             <div className="login-container">
@@ -639,8 +650,9 @@ function CustomerPage() {
                   <ul>
                     {order.cart.map((item, itemIndex) => (
                       <li key={itemIndex}>
-                        {item.name} - ₹{item.price}<br/>
-                       Size: {item.size}
+                        {item.name} - ₹{item.price}
+                        <br />
+                        Size: {item.size}
                       </li>
                     ))}
                   </ul>
@@ -671,14 +683,15 @@ function CustomerPage() {
                     </p>
                     <h3>Cart Items:</h3>
                     <ul>
-                      {order.cart.map((item, itemIndex) =>{ 
-                        
-                        return(
-                        <li key={itemIndex}>
-                            {item.name} - ₹{item.price}<br/>
+                      {order.cart.map((item, itemIndex) => {
+                        return (
+                          <li key={itemIndex}>
+                            {item.name} - ₹{item.price}
+                            <br />
                             Size: {item.size}
-                        </li>
-                      )})}
+                          </li>
+                        );
+                      })}
                     </ul>
                     Total:₹{order.total}
                   </div>

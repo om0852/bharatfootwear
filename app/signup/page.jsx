@@ -36,6 +36,11 @@ function Page() {
   };
   return (
     <div className="login-container">
+      <img
+        className="mx-auto"
+        width={50}
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZP-fS3vscpaIWZYdvmnNpf3iHfEJpoU3K7IdwQJVM1zrzv-OYXWV0wxNwmiK0MXH3oig&usqp=CAU"
+      />
       <h2>Sign Up</h2>
       <input
         type="email"
@@ -61,7 +66,7 @@ function Page() {
         />
       )}
       {gotp != Infinity && <button onClick={handleSubmit}>Create</button>}{" "}
-      {gotp == Infinity && <button onClick={handleOtp}>Send Otp</button>}{" "}<br/>
+      {gotp == Infinity && <button onClick={handleOtp}>Send Otp</button>} <br />
       <Link href={"/login"}>Have a account?</Link>
     </div>
   );
